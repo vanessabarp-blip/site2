@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site sobre Motos</title>
+
+<style>
+
+/* ===== GERAL ===== */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
+    color: #fff;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                url("imagens/motocicleta.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* ===== HEADER ===== */
+header {
+    background: #c00;
+    text-align: center;
+    padding: 20px;
+}
+
+nav a {
+    margin: 10px;
+    padding: 10px;
+    background: #900;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ===== PÁGINAS ===== */
+.page {
+    display: none;
+    padding: 20px;
+    flex: 1;
+}
+
+.active {
+    display: block;
+}
+
+/* ===== HOME (3 COLUNAS) ===== */
+.home-container {
+    display: flex;
+    align-items: flex-start; /* Alinhado ao topo para comportar o texto longo */
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.texto {
+    width: 45%; /* Ajustado para caber o texto original lado a lado */
+}
+
+.imagem-centro img {
+    width: 300px;
+    border-radius: 10px;
+}
+
+/* ===== PRODUTOS ===== */
+.moto {
+    background: #222;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* Tamanho padrão pras imagens de produto não quebrarem o layout */
+.moto img {
+    max-width: 150px;
+    display: block;
+    margin: 10px 0;
+}
+
+button {
+    background: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+/* ===== CARRINHO ===== */
+#lista-carrinho {
+    list-style: none;
+    padding: 0;
+}
+
+.item-carrinho {
+    background: rgba(255,255,255,0.1);
+    margin: 5px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #c00;
+}
+
+/* ===== RODAPÉ ===== */
+footer {
+    background: #c00;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .texto {
+        width: 100%;
+    }
+}
+
+</style>
+
+<script>
+// Lógica de Navegação
+function showPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// Lógica do Carrinho
+let carrinho = [];
+let total = 0;
+
+function addToCart(nome, preco) {
+    carrinho.push({ nome, preco });
+    total += preco;
+    alert(nome + " adicionado ao carrinho!");
+    renderCarrinho();
+}
+
+function renderCarrinho() {
+    const lista = document.getElementById('lista-carrinho');
+    const totalElemento = document.getElementById('total-carrinho');
+    
+    lista.innerHTML = "";
+    carrinho.forEach((item, index) => {
+        lista.innerHTML += `<li class="item-carrinho">${item.nome} <span>R$ ${item.preco}</span></li>`;
+    });
+    
+    totalElemento.innerText = total;
+}
+
+function finalizarCompra() {
+    if(carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+    } else {
+        alert("Compra finalizada com sucesso! Valor total: R$ " + total);
+        carrinho = [];
+        total = 0;
+        renderCarrinho();
+        showPage('home');
+    }
+}
+</script>
+
+</head>
+
+<body onload="showPage('home')">
+
+<header>
+<h1>Bem-vindo ao Mundo das Motos!</h1>
+
+<nav>
+<a onclick="showPage('home')">Início</a>
+<a onclick="showPage('produtos')">Produtos</a>
+<a onclick="showPage('dicas')">Dicas</a>
+<a onclick="showPage('carrinho-page')" style="background: #500;">🛒 Carrinho</a>
+</nav>
+</header>
+
+<div id="home" class="page active">
+    <div class="home-container">
+        <div class="texto">
+            <h2>História das Motos</h2>
+            <p>
+            A Invenção da Motocicleta<br>
+            A origem da motocicleta remonta ao século XIX, quando inventores em todo o mundo começaram a experimentar<br>
+            a ideia de adicionar um motor a uma bicicleta. A primeira motocicleta verdadeira foi criada por Gottlieb<br>
+            Daimler e Wilhelm Maybach na Alemanha, em 1885. Esta invenção, chamada de “Reitwagen”, foi a primeira a<br>
+            usar um motor de combustão interna, uma inovação que se tornou a base para todas as futuras motocicletas.<br>
+            </p>
+        </div>  
+            </p>
+             <div class="imagem-centro">
+                <img src="imagens/primeiramoto.jpg">
+             </div>
+            <p>
+          
+
+        <div class="texto">
+            <h2>Evolução</h2>
+            <p>
+            Apesar de Daimler e Maybach terem sido os primeiros a inventar a motocicleta, foram os inventores e fabricantes<br>
+             subsequentes que realmente aprimoraram e popularizaram o veículo. Na virada do século XX, empresas como a Indian<br>
+             Motorcycle Co. nos Estados Unidos e a Triumph Motorcycles no Reino Unido começaram a produzir motocicletas em massa,<br> 
+             tornando-as mais acessíveis para o público em geral.
+             <br><br>
+
+
+            Durante as duas guerras mundiais, a motocicleta provou ser um recurso valioso para as forças militares, devido à sua<br>
+             velocidade e capacidade de manobra. Posteriormente, a popularidade da motocicleta como veículo pessoal cresceu,<br>
+              particulamente nos Estados Unidos, onde surgiu uma cultura de motocicleta distinta, com o crescimento dos <br>
+              clubes de motociclistas e a popularização do estilo de vida do motociclista.<br>
+
+
+
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="produtos" class="page">
+    <h2>Produtos</h2>
+
+    <div class="moto">
+        <h3>Capacete Pro Tork</h3>
+        <img src="imagens/capacetefeminino.jpg">
+        <p>R$ 300</p>
+        <button onclick="addToCart('Capacete Pro Tork', 300)">Comprar</button>
+    </div>
+
+    <div class="moto">
+        <h3>Capacete Attack HSA</h3>
+        <img src="imagens/capacetemasculino.jpg">
+        <p>R$ 350</p>
+        <button onclick="addToCart('Capacete Attack HSA', 350)">Comprar</button>
+    </div>
+
+    <div class="moto">
+        <h3>Luva X11</h3>
+        <img src="imagens/luva.jpg">
+        <p>R$ 150</p>
+        <button onclick="addToCart('Luva X11', 150)">Comprar</button>
+    </div>
+
+    <div class="moto">
+        <h3>Roupa de Proteção</h3>
+        <img src="imagens/roupa.jpg">
+        <p>R$ 300</p>
+        <button onclick="addToCart('Roupa de Proteção', 300)">Comprar</button>
+    </div>
+</div>
+
+<div id="carrinho-page" class="page">
+    <h2>Seu Carrinho</h2>
+    <div id="conteudo-carrinho" style="background: #222; padding: 20px; border-radius: 10px; max-width: 600px; margin: auto;">
+        <ul id="lista-carrinho">
+            </ul>
+        <hr style="border-color: #c00;">
+        <h3>Total: R$ <span id="total-carrinho">0</span></h3>
+        <button onclick="finalizarCompra()" style="width: 100%; font-weight: bold; font-size: 1.2em;">Finalizar Pedido</button>
+    </div>
+</div>
+
+<div id="dicas" class="page">
+    <h1 style="color: red;">Dicas De Segurança❗❗❗</h1>
+   
+<p>
+ <h2>Equipamento é sua Pele</h2>
+Capacete: Sempre afivelado e com a viseira fechada<br>
+(protege contra vento, detritos e insetos que podem causar sustos).<br>
+Corpo Protegido: Jaqueta com proteções, luvas (essenciais para as <br>
+mãos em quedas bobas) e calçado fechado que cubra o tornozelo.
+ <h2>Comportamento Defensivo</h2>
+Seja Visível: Evite os pontos cegos de carros e caminhões. Se você<br> 
+não vê o rosto do motorista pelo retrovisor dele, ele também não te vê.<br>
+Distância de Reação: Não cole na traseira. Mantenha espaço para frear <br>
+ou desviar se o veículo da frente parar de repente ou desviar de um buraco.<br>
+Corredor com Cautela: Use apenas quando o trânsito estiver parado ou muito<br> 
+lento, mantendo velocidade baixa e compatível com a via.
+ <h2>Técnica de Pilotagem</h2>
+Frenagem: Aprenda a usar os dois freios juntos. O dianteiro para parar a moto<br>
+e o traseiro para dar estabilidade.Olhar Direcionado: A moto vai para onde você<br>
+olha. Em uma emergência, foque na rota de fuga, não no obstáculo.Atenção ao Piso:<br>
+ Cuidado redobrado com faixas pintadas, tampas de bueiro e areia, que ficam<br>
+ extremamente escorregadios, especialmente na chuva.<br>
+<h2>Manutenção Básica</h2>
+Pneus e Corrente: Pneu murcho ou gasto compromete a curva; corrente frouxa ou<br>
+ seca pode travar a roda ou quebrar
+</p>
+</div>
+
+<footer>
+    <p>© 2026 - Site de Motos | Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html
